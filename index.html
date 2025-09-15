@@ -10,33 +10,11 @@
     <!-- PyScript CSS -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2025.5.1/core.css">
 
-    <script>
-        // ignore browsers that already support SharedArrayBuffer
-        if (!('_PyEM_CountArgsPtr' in Object.prototype)) {
-        Object.defineProperty(Object.prototype,'_PyEM_CountArgsPtr',{get:()=>0,set(){}});
-        const { isArray } = Array;
-        const isOptions = args => args.length && typeof args[0] === 'object' && args[0] !== null;
-        globalThis.Blob = class extends Blob {
-            constructor(blobParts, ...args) {
-            if (
-                isOptions(args) &&
-                args[0].type === 'text/javascript' &&
-                isArray(blobParts) &&
-                typeof blobParts.at(0) === 'string'
-            ) {
-                blobParts[0] = `Object.defineProperty(Object.prototype,'_PyEM_CountArgsPtr',{configurable:true,get:()=>0,set(){}});${blobParts[0]}`;
-            }
-            super(blobParts, ...args);
-            }
-        };
-        }
-    </script>
-
     <!-- This script tag bootstraps PyScript -->
-    <script type="module" src="https://pyscript.net/releases/2025.5.1/service-worker.js"></script>
-    <script type="module" src="https://pyscript.net/releases/2025.5.1/core.js"></script>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2025.7.2/core.css">
+    <script type="module" src="https://pyscript.net/releases/2025.7.2/core.js"></script>
 </head>
 <body>
-    <script type="py" src="./main.py" config="./pyscript.toml" terminal worker service-worker="polyfill-sw.js"></script>
+    <script type="py" src="./main.py" config="./pyscript.toml" terminal worker service-worker="service-worker.js"></script>
 </body>
 </html>
